@@ -10,13 +10,17 @@ cursor = db.cursor()
 
 def main(page: ft.Page):
     page.title = "Flet counter example"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.MainAxisAlignment.CENTER
 
     nombre_txt = ft.TextField(value="",hint_text="Nombre", text_align=ft.TextAlign.CENTER, width=300)
     apellido_txt = ft.TextField(value="", hint_text="Apellido", text_align=ft.TextAlign.CENTER, width=300)
     dni_txt = ft.TextField(value="", hint_text="DNI", text_align=ft.TextAlign.CENTER, width=300)
     patente_txt = ft.TextField(value="", hint_text="Patente", text_align=ft.TextAlign.CENTER, width=300)
 
+    def column_h_align(align:ft.CrossAxisAlignment):
+        return ft.Column(
+
+        )
     def minus_click(e):
         print(type(nombre_txt.value))
         db_query = "INSERT INTO ingresos(nombre,apellido,dni,patente) VALUES(%s,%s,%s,%s)"
@@ -24,18 +28,20 @@ def main(page: ft.Page):
         db.commit()
     
         page.update()
-
+    
     page.add(
-        ft.Column(
-            [
+        ft.Row([
+            ft.Column([
                 nombre_txt,
-                apellido_txt,
-                dni_txt,
-                patente_txt,
+                apellido_txt, 
+                dni_txt, 
+                patente_txt, 
+
                 ft.IconButton(ft.icons.SEND_ROUNDED, on_click=minus_click),
-            ],
-            alignment=ft.MainAxisAlignment.CENTER
-        )
+                ], alignment = "center"
+            )
+        ], alignment = ft.CrossAxisAlignment.CENTER)
     )
+    
 
 ft.app(main)
